@@ -30,15 +30,51 @@ A barcode scanning, inventory management, and point-of-sale (POS) app built with
 
 ## Getting started
 
+### 1. Prerequisites
+
+- [Node.js](https://nodejs.org) (v18 or newer) with **npm**
+- The **Expo Go** app on your phone ([Android](https://play.google.com/store/apps/details?id=host.exp.exponent) / [iOS](https://apps.apple.com/app/expo-go/id982107779)) — or an Android/iOS emulator
+- A [Supabase](https://supabase.com) project (free tier is fine)
+
+### 2. Install dependencies
+
+Open a terminal inside the project folder and run:
+
 ```bash
 npm install
+```
+
+### 3. Set up Supabase
+
+1. Create a project at [supabase.com](https://supabase.com).
+2. In the **SQL Editor**, run `supabase/migrations/20260805000000_create_subscriptions.sql` to create the `subscriptions` table.
+3. Enable the **Email** auth provider (Authentication → Providers → Email).
+4. Copy your project's `URL` and `anon` key from **Project Settings → API**.
+5. Open `App.js` and replace the `SUPABASE_URL` and `SUPABASE_ANON_KEY` values with your own.
+6. (Optional, for payment checking) Deploy the Edge Functions in `supabase/functions/` and set the `SUPABASE_SERVICE_ROLE_KEY` secret.
+
+### 4. Run the app
+
+```bash
 npm start          # start Metro / Expo dev server
-npm run android    # run on Android
-npm run ios        # run on iOS
+npm run android    # run on Android (emulator)
+npm run ios        # run on iOS (emulator)
 npm run web        # run in the browser
 ```
 
-> Configure your own Supabase project: replace the `SUPABASE_URL` / `SUPABASE_ANON_KEY` in `App.js` with your project's credentials.
+After `npm start`, scan the QR code shown in the terminal with the **Expo Go** app on your phone.
+
+### 5. Test the app
+
+1. **Create an account** — open the app and tap *Make one!!!!* to sign up with an email and password (or sign in if you already have one).
+2. **Scan a barcode** — point the camera at any product barcode inside the blue scan frame. A beep confirms the scan.
+3. **Add an item to stock** — in the form that appears, enter a product name, price and quantity, then tap **Save Stock**. It now appears in the **Vault**.
+4. **Check the dashboard** — open the **Vault** tab to see total units, total value, your top item, and use search / filters / the FIFO switch.
+5. **Sell an item** — open the **Sell** tab and scan the same barcode. It joins the cart; tap **Checkout** to deduct the stock.
+6. **Refresh** — pull down on the Vault list to re-sync from Supabase. Turn off your connection to see offline (cached) mode.
+7. **Try the POS** — switch to the POS register tab, add products, and complete a sale to see the receipt flow.
+
+> The free plan allows 10 items. Upgrade to Pro (via the in-app payment modal) to unlock unlimited items, photos, low-stock alerts, and manual barcode entry.
 
 ## Project structure
 
